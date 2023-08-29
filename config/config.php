@@ -8,6 +8,7 @@ $url = substr($urlPath, strlen($folderPath));
 //Almacena la URL relativa en URL. Permitiendo que otros componentes accedan a esta URL para determinar la ruta solicitada por el usuario
 define("URL",$url);
 
+date_default_timezone_set("America/Mexico_City");
 /*Establece una constante URL que contiene la URL relativa de la solicitud actual. 
  Esto es útil para que otros componentes como el enrutador, puedan analizar esta URL 
  y determinar qué controlador y acción se deben ejecutar en función de la solicitud del usuario. */
