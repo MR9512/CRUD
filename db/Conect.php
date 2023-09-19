@@ -1,6 +1,5 @@
 <?php
-
-//encapsula la funcionalidad relacionada con la conexión a la base de datos
+//Encapsula la funcionalidad relacionada con la conexión a la base de datos
 class Conect {
    //Establece la conexión a la base de datos MySQL
    public function Conexion() {

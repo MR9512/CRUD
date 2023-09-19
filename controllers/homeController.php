@@ -3,7 +3,9 @@
 class homeController{
     //Ejecuta un metodo en automatico
     public function __construct(){
-
+        //Permite aplicar los estilos dependiendo el archivo seleccionado
+        $this->bulmaCSS = "../assets/css/bulma.min.css"; 
+        $this->estilosCSS = "../assets/css/estilos.css"; ;
     }
     //Metodo que implementa la lógica para cargar y mostrar el contenido del panel de control.
     public function dashboard(){

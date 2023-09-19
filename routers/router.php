@@ -26,17 +26,35 @@ class router{
           }
           //Forma el nombre completo del controlador añadiendo "Controller" al final
           $this->controller = $this->controller . "Controller";
-          //Incluye el archivo del controlador correspondiente
-          require_once("Controllers/" . $this->controller . ".php");
+           // Verifica si el archivo del controlador existe
+        if (file_exists("Controllers/" . $this->controller . ".php")) {
+            //Si existe, incluye el archivo del controlador correspondiente
+            require_once "Controllers/" . $this->controller . ".php";
+        } else {
+            // Si el controlador no existe, muestra una página de error 404
+            $this->show404Error();
+        }
       }
       //Crea una instancia del controlador determinado y ejecuta el método correspondiente basado en la información del método matchRoute
       public function run(){
         //Crea una instancia del controlador correspondiente
         $controller = new $this->controller();
-        //Obtiene el nombre del método a ejecutar desde la propiedad $this->method
-        $metodo = $this->method;
-        //Llama al método del controlador con el nombre obtenido
-        $controller->$metodo();
+        // Verifica si el método existe en el controlador
+        if (method_exists($controller, $this->method)) {
+            //Obtiene el nombre del método a ejecutar desde la propiedad $this->method y lo guarda en una variable
+            $method = $this->method;
+            //Llama al método del controlador con el nombre obtenido
+            $controller->$method();
+        } else {
+            // Si el método no existe, muestra una página de error 404
+            $this->show404Error();
+        }
+    }
+
+    private function show404Error() {
+        // Muestra un mensaje de error 404 en caso de no existir la ruta seleccionada
+        echo "Error 404 - Página no encontrada";
+        exit;
     }
     
 }
