@@ -7,10 +7,14 @@ $urlPath = $_SERVER["REQUEST_URI"];
 $url = substr($urlPath, strlen($folderPath));
 //Almacena la URL relativa en URL. Permitiendo que otros componentes accedan a esta URL para determinar la ruta solicitada por el usuario
 define("URL",$url);
-//Establece la zona horaria predeterminada
-date_default_timezone_set("America/Mexico_City");
+//Define la constante que apunta a la URL base
+define("URLHOME", "http://localhost/CRUD/home/");
+//Define la constante que apunta a la URL base de las imágenes del sistema
+define("URLSYSIMG", "http://localhost/CRUD/img/");
 //Define un nombre personalizado para la sesión
 define("APP_SESSION_NAME","CRUD");
+//Establece la zona horaria predeterminada
+date_default_timezone_set("America/Mexico_City");
 /*Establece una constante URL que contiene la URL relativa de la solicitud actual. 
  Esto es útil para que otros componentes como el enrutador, puedan analizar esta URL 
  y determinar qué controlador y acción se deben ejecutar en función de la solicitud del usuario. */
