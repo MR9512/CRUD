@@ -1,84 +1,20 @@
- <!-- Inicio de la barra de navegación -->
-<nav class="navbar">
+<!-- Contenedor principal con diseño fluido -->
+<div class="container is-fluid">
+    <!-- Título principal de la página -->
+    <h1 class="title">Home</h1>
 
-<!-- Contenedor de la marca o logotipo -->
-<div class="navbar-brand">
-    <!-- Enlace a la página principal o logo -->
-    <a class="navbar-item" href="<?= URLHOME ?>">
-        <img src="<?= URLSYSIMG ?>bulma.png" alt="Bulma" width="112" height="28">
-    </a>
+    <!-- Columnas para centrar el contenido -->
+    <div class="columns is-flex is-justify-content-center">
+        <!-- Figura con una imagen -->
+        <figure class="image is-128x128">
+            <!-- Imagen redondeada del logo de Bulma, cargada desde la URLSYSIMG -->
+            <img class="is-rounded" src="<?= URLSYSIMG ?>user.png" alt="User Imagen">
+        </figure>
+    </div>
 
-    <!-- Icono de hamburguesa para dispositivos móviles -->
-    <div class="navbar-burger" data-target="navbarExampleTransparentExample">
-        <span></span> <!-- Línea 1 del ícono de hamburguesa -->
-        <span></span> <!-- Línea 2 del ícono de hamburguesa -->
-        <span></span> <!-- Línea 3 del ícono de hamburguesa -->
+    <!-- Otra fila de columnas para el mensaje de bienvenida -->
+    <div class="columns is-flex is-justify-content-center">
+        <!-- Subtítulo de bienvenida, puede personalizarse con el nombre del usuario -->
+        <h2 class="subtitle">¡Bienvenido User Name!</h2>
     </div>
 </div>
-
-<!-- Contenedor del menú de navegación -->
-<div id="navbarExampleTransparentExample" class="navbar-menu">
-
-    <!-- Sección de elementos de menú en la izquierda -->
-    <div class="navbar-start">
-        <!-- Enlace a la página de "Dashboard" -->
-        <a class="navbar-item" href="#">
-            Dashboard
-        </a>
-
-        <!-- Menú desplegable "Usuarios" -->
-        <div class="navbar-item has-dropdown is-hoverable">
-            <!-- Enlace principal del menú desplegable -->
-            <a class="navbar-link" href="#">
-                Usuarios
-            </a>
-
-            <!-- Contenido del menú desplegable -->
-            <div class="navbar-dropdown is-boxed">
-                <!-- Opción "Nuevo" en el menú desplegable -->
-                <a class="navbar-item" href="#">
-                    Nuevo
-                </a>
-                <!-- Opción "Lista" en el menú desplegable -->
-                <a class="navbar-item" href="#">
-                    Lista
-                </a>
-                <!-- Opción "Buscar" en el menú desplegable -->
-                <a class="navbar-item" href="#">
-                    Buscar
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sección de elementos de menú en la derecha -->
-    <div class="navbar-end">
-        <!-- Menú desplegable del nombre de usuario -->
-        <div class="navbar-item has-dropdown is-hoverable">
-            <!-- Nombre de usuario -->
-            <a class="navbar-link">
-                ** User Name **
-            </a>
-
-            <!-- Contenido del menú desplegable del usuario -->
-            <div class="navbar-dropdown is-boxed">
-                <!-- Opción "Mi cuenta" -->
-                <a class="navbar-item" href="#">
-                    Mi cuenta
-                </a>
-                <!-- Opción "Mi foto" -->
-                <a class="navbar-item" href="#">
-                    Mi foto
-                </a>
-                <hr class="navbar-divider"> <!-- Línea divisoria -->
-                <!-- Opción "Salir" -->
-                <a class="navbar-item" href="#" id="btn_exit">
-                    Salir
-                </a>
-            </div>
-        </div>
-    </div>
-
-</div>
-</nav>
-<!-- Fin de la barra de navegación -->

@@ -7,7 +7,9 @@ $urlPath = $_SERVER["REQUEST_URI"];
 $url = substr($urlPath, strlen($folderPath));
 //Almacena la URL relativa en URL. Permitiendo que otros componentes accedan a esta URL para determinar la ruta solicitada por el usuario
 define("URL",$url);
-//Define la constante que apunta a la URL base
+//Define la constante que apunta a la URL base del sistema
+define("URLSYS","http://localhost/CRUD/");
+//Define la constante que apunta a la URL del panel de control
 define("URLHOME", "http://localhost/CRUD/home/");
 //Define la constante que apunta a la URL base de las imágenes del sistema
 define("URLSYSIMG", "http://localhost/CRUD/img/");
