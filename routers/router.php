@@ -6,8 +6,24 @@ class router{
     private $method;
       //Se llama automáticamente cuando se crea una instancia de la clase router para llamar a un metodo
       public function __construct(){
+        //Llama automáticamente los estilos de bulma
+        $this->bulmaCSS = "../assets/css/bulma.min.css"; 
+        //Llama automáticamente el metodo matchRoute
         $this->matchRoute();
       }
+
+      //Muestra una página de Error cuando no existe un controlador en el proyecto
+      public function show404Error() {
+        //Incluye el encabezado de la página
+        require_once("views/templates/header.php");
+        //Incluye la vista específica para el error 404
+        require_once("views/404/404.php");
+        //Incluye el pie de página
+        require_once("views/templates/footer.php");
+        //Detiene la ejecución del script
+        exit;
+      }
+      
       //Analiza la URL para extraer el nombre del controlador y el método a partir de la URL solicitada
       public function matchRoute(){
           //Divide la URL en partes utilizando '/' como separador
@@ -31,7 +47,7 @@ class router{
             //Si existe, incluye el archivo del controlador correspondiente
             require_once "Controllers/" . $this->controller . ".php";
         } else {
-            // Si el controlador no existe, muestra una página de error 404
+            // Si el controlador no existe, muestra la página de error 404
             $this->show404Error();
         }
       }
@@ -46,19 +62,13 @@ class router{
             //Llama al método del controlador con el nombre obtenido
             $controller->$method();
         } else {
-            // Si el método no existe, muestra una página de error 404
+            // Si el método no existe, muestra la página de error 404
             $this->show404Error();
         }
-    }
-
-    private function show404Error() {
-        // Muestra un mensaje de error 404 en caso de no existir la ruta seleccionada
-        echo "Error 404 - Página no encontrada";
-        exit;
     }
     
 }
 
 /*Se encarga de manejar el enrutamiento de solicitudes y controlar cuál controlador y método (acción) 
-deben ejecutarse en función de la URL solicitada */
+deben ejecutarse en función de la URL solicitada de lo contrario muestra una página de Error 404*/
 ?>
