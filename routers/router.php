@@ -6,8 +6,9 @@ class router{
     private $method;
       //Se llama automáticamente cuando se crea una instancia de la clase router para llamar a un metodo
       public function __construct(){
-        //Llama automáticamente los estilos de bulma
+        //Llama automáticamente los estilos de bulma y los personalizados
         $this->bulmaCSS = "../assets/css/bulma.min.css"; 
+        $this->estilosCSS = "../assets/css/estilos.css";
         //Llama automáticamente el metodo matchRoute
         $this->matchRoute();
       }

@@ -1,4 +1,29 @@
-body,html{
+/*Establece la altura y el ancho del cuerpo y el elemento html al 100% para ocupar todo el viewport */
+body, html {
     height: 100%;
     width: 100%;
 }
+/*Define una clase llamada .main-container para el contenedor principal */
+.main-container {
+    /*Establece la altura y el ancho del contenedor al 100% para ocupar todo el viewport */
+    height: 100%;
+    width: 100%;
+    /*Utiliza flexbox para centrar el contenido tanto vertical como horizontalmente */
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+}
+
+/*Aplica estilos a elementos con la clase .login que son descendientes directos de un elemento con la clase .main-container y también a elementos con la clase .hero-body que son descendientes directos de un elemento con la clase .main-container */
+.main-container > .login,
+.main-container > .hero-body {
+    /*Establece la altura del elemento .login y .hero-body a 'auto', permitiendo que se ajusten automáticamente según su contenido */
+    height: auto;
+    /*Establece el ancho del elemento .login y .hero-body al 100% del contenedor padre (.main-container) */
+    width: 100%;
+    /*Establece el ancho máximo del elemento al que se aplican estos estilos a 400 píxeles */
+    max-width: 400px;
+    /*Establece el ancho mínimo del elemento al que se aplican estos estilos a 300 píxeles */
+    min-width: 300px;
+}
+
