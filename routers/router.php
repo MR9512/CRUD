@@ -7,8 +7,7 @@ class router{
       //Se llama automáticamente cuando se crea una instancia de la clase router para llamar a un metodo
       public function __construct(){
         //Llama automáticamente los estilos de bulma y los personalizados
-        $this->bulmaCSS = "../assets/css/bulma.min.css"; 
-        $this->estilosCSS = "../assets/css/estilos.css";
+        $this->errorCSS = "../assets/css/error.css";
         //Llama automáticamente el metodo matchRoute
         $this->matchRoute();
       }
@@ -18,7 +17,7 @@ class router{
         //Incluye el encabezado de la página
         require_once("views/templates/header.php");
         //Incluye la vista específica para el error 404
-        require_once("views/404/404.php");
+        require_once("views/error/404.php");
         //Incluye el pie de página
         require_once("views/templates/footer.php");
         //Detiene la ejecución del script

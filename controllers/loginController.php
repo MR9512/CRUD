@@ -1,20 +1,55 @@
-<?php 
-//La clase establece la base para el controlador relacionado con la página de inicio
-class loginController{
-    //Ejecuta un metodo en automatico
-    public function __construct(){
-        //Permite aplicar los estilos dependiendo el archivo seleccionado
-        $this->bulmaCSS = "../assets/css/bulma.min.css"; 
-        $this->estilosCSS = "../assets/css/estilos.css";
+<?php
+class loginController
+{
+    public function __construct()
+    {
+        //Incluye el modelo de login
+        require_once "models/loginModel.php";
+        //Crea una instancia del modelo de login
+        $this->loginModel = new loginModel();
+        //Ruta del archivo CSS asociado a esta vista
+        $this->loginCSS = "../assets/css/login.css";
+        //Ruta del archivo JavaScript asociado a esta vista
+        $this->loginJS = "assets/js/login.js";
     }
-    //Metodo que implementa la lógica para cargar y mostrar el contenido del panel de control.
-    public function ingreso(){
-        //Incluye el encabezado de la página
-        require_once("views/templates/header.php");
-        //Incluye la vista específica para el login
-        require_once("views/login/login.php");
-        //Incluye el pie de página
-        require_once("views/templates/footer.php");
+
+    //Acción para mostrar el formulario de registro
+    public function registrar(){
+        //Incluye los archivos de la plantilla
+        require_once "views/templates/header.php";
+        require_once "views/login/login.php";
+        require_once "views/templates/footer.php";
+    }
+
+    //Acción para procesar el formulario de registro
+    public function save(){
+        //Llama al método del modelo para guardar el usuario en la base de datos
+        $this->loginModel->saveUser($_POST); 
+    }
+
+    //Acción para procesar el formulario de inicio de sesión
+    public function ingresar()
+    {
+        //Obtiene los roles del modelo
+        $resp = $this->loginModel->getRoles();
+        //Verifica si se enviaron datos de usuario y contraseña
+        if (isset($_POST["usuario"]) && isset($_POST["contrasena"])) {
+            //Llama al método del modelo para validar el inicio de sesión
+            $resp = $this->loginModel->validar($_POST);
+            //Verifica si se encontró un usuario válido
+            if (isset($resp["id_usuario"])) {
+                //Inicia una sesión y almacena los datos del usuario
+                session_start();
+                $_SESSION = $resp;
+                //Redirige al usuario a la página del CRUD
+                header("Location:../usuarios/listado");
+            }
+        }
+        // Incluye los archivos de la plantilla
+        require_once "views/templates/header.php";
+        require_once "views/login/login.php";
+        require_once "views/templates/footer.php";
     }
 }
-?>
+
+

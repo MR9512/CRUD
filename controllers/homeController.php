@@ -1,24 +1,14 @@
-<?php 
-//La clase establece la base para el controlador relacionado con la página de inicio
-class homeController{
-    //Ejecuta un metodo en automatico
-    public function __construct(){
-        //Permite aplicar los estilos dependiendo el archivo seleccionado
-        $this->bulmaCSS = "../assets/css/bulma.min.css"; 
-        $this->estilosCSS = "../assets/css/estilos.css";
-        //Permite aplicar la funcionalidad dependiendo el archivo seleccionado
-        $this->js = "assets/js/nabvar.js";
-    }
-    //Metodo que implementa la lógica para cargar y mostrar el contenido del panel de control.
+<?php
+class homeController
+{
+
     public function dashboard(){
-        //Incluye el encabezado de la página
-        require_once("views/templates/header.php");
-        //Incluye la vista específica para la barra de navegación
-        require_once("views/home/nabvar.php");
-        //Incluye la vista específica para el panel de control
-        require_once("views/home/dashboard.php");
-        //Incluye el pie de página
-        require_once("views/templates/footer.php");
+        //Incluye los archivos de la plantilla
+        require_once "views/templates/header.php";
+        require_once "views/home/dashboard.php";
+        require_once "views/templates/footer.php";
     }
+
 }
-?>
+
+
