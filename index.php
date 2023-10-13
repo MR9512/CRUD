@@ -1,13 +1,10 @@
 <?php
-//Incluye el archivo de inicio de sesion y su nombre
-require_once "views/session/session_start.php";
-//Divide la URL actual en segmentos y los almacena en una variable
-require_once "routers/router.php";
-//Crea una instancia de la clase router para manejar las rutas y controladores
-$routers = new router();
-//Inicia el proceso de enrutamiento y ejecuta el controlador y la acción en función de la URL solicitada
-$routers->run();
-
+   //Se requiere el archivo de configuración para establecer la configuración de la aplicación
+   require_once("config/config.php");
+   //Se requiere el archivo del enrutador para manejar las solicitudes de la aplicación
+   require_once("routers/router.php");
+   //Se crea una nueva instancia del objeto Router
+   $router = new Router();
+   //Se ejecuta el método run() del enrutador para manejar la solicitud actual
+   $router->run();
 ?>
-
-<!-- LINK DE SEGUIMIENTO: https://chat.openai.com/share/77c948c5-616e-4c06-af83-c7a24907e6d8-->
