@@ -3,7 +3,7 @@
  class usuariosModel{
 
     public function __construct(){
-        require_once("db/Conect.php");
+        require_once("DB/Conect.php");
         $con = new Conect();
         $this->con = $con->conexion();
         $fecha = getdate();
@@ -11,15 +11,12 @@
     }
 
     public function getUsuarios($condicion = null, $rol = null){
-        $query = "SELECT *, IF(usuarios.status = 1,'Activo','Inactivo') as nombreStatus, IF(usuarios.status = 1,'bg-success','bg-warning') as colorStatus, IF(usuarios.status = 1,'Activo','Inactivo') as estatus FROM usuarios INNER JOIN roles on usuarios.id_rol = roles.id_rol";
+        $query = "SELECT *, IF(usuarios.status = 1,'Activo','Inactivo') as nombreStatus, IF(usuarios.status = 1,'bg-success','bg-warning') as colorStatus FROM usuarios INNER JOIN roles on usuarios.id_rol = roles.id_rol";
         if($condicion != null || $rol != null){
            $query.= " WHERE"; 
         }
         if($condicion == 1){
             $query.=" status = 1";
-        }
-        if($condicion != null && $condicion != 1){
-            $query.=" usuarios.id_usuario = $condicion";
         }
         if($rol != null){
            if($condicion == 1){
@@ -39,7 +36,6 @@
                $data["password"][$i] = $row["password"];
                $data["telefono"][$i] = $row["telefono"];
                $data["status"][$i] = $row["status"];
-               $data["estatus"][$i] = $row["estatus"];
                $data["fecha_altaUsuario"][$i] = $row["fecha_altaUsuario"];
                $data['nombreStatus'][$i] = $row['nombreStatus'];
                $data['colorStatus'][$i] = $row['colorStatus'];
@@ -92,7 +88,7 @@
     }
 
     public function deleteUsuario($id_usuario){
-        $query = "DELETE usuarios WHERE id_usuario = $id_usuario";
+        $query = "UPDATE usuarios SET status = 0 WHERE id_usuario = $id_usuario";
         mysqli_query($this->con, $query);
         return true;
     }

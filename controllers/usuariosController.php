@@ -4,8 +4,8 @@
   
     public function __construct(){
         parent::__construct();
-        require_once("models/usuariosModel.php");
-        require_once("models/generalesModel.php");
+        require_once("Models/usuariosModel.php");
+        require_once("Models/generalesModel.php");
         $this->usuariosModel = new usuariosModel();
         $this->generalesModel = new generalesModel();
         $this->rol = $this->generalesModel->getRoles();
@@ -15,9 +15,9 @@
      public function listado(){
 
        $respuesta = $this->usuariosModel->getUsuarios();
-       require_once("views/templates/header.php");
-       require_once("views/usuarios/listado.php");
-       require_once("views/templates/footer.php");
+       require_once("Views/templates/header.php");
+       require_once("Views/usuarios/listado.php");
+       require_once("Views/templates/footer.php");
        
      }
 
@@ -48,6 +48,15 @@
         echo json_encode($resp);
       }
       
+      public function searchUsuario(){
+        $respuesta = $this->usuariosModel->buscarUsuarios($_GET['buscarUsuario']);
+        require_once("Views/templates/header.php");
+        require_once("Views/templates/menu.php");
+        require_once("Views/productos/searchProducto.php");
+        require_once("Views/templates/footer.php");
+      }
+
+
     }
 
   

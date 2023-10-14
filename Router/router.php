@@ -6,7 +6,7 @@ class router{
     private $method;
       //Se llama automáticamente cuando se crea una instancia de la clase router para llamar a un metodo
       public function __construct(){
-        //Llama automáticamente los estilos de bulma y los personalizados
+        //Llama automáticamente los estilos personalizados
         $this->errorCSS = "../assets/css/error.css";
         //Llama automáticamente el metodo matchRoute
         $this->matchRoute();
@@ -35,7 +35,7 @@ class router{
           //Verifica si no hay parámetros de consulta en la URL
           if ($url[2] == "") {
               // Si no hay parámetros de consulta, usa "dashboard" como el método por defecto
-              $this->method = "dashboard";
+              $this->method = "index";
           } else {
               //Si hay parámetros de consulta, utiliza el primer segmento como el nombre del método
               $this->method = $metodo[0];
