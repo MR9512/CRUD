@@ -50,6 +50,13 @@
     </div>
   </div>
   <div class="col-md-6">
+    <label for="inputCity" class="form-label">Fecha</label>
+    <input type="date" name="fechaUsuario" class="form-control correoUsuario" id="inputCity">
+    <div class="error_correoUsuario" style="display:none;color:red">
+      Favor de ingresar una fecha
+    </div>
+  </div>
+  <div class="col-md-6">
   <label for="formFile" class="form-label">Rol</label>
   <select name="id_rol" name="id_rol" class="form-control id_rol" placeholder="Rol:">
       <option>Seleccione:</option>
