@@ -125,6 +125,14 @@ function peticionAjax(obj) {
       //Cuando la solicitud es exitosa, se ejecuta esta función
       switch(obj.accion) {
             case "insertarUsuario":
+              var html = "";
+              var usuarios = res.usuarios;
+              html += '<select name="id_rol" name="id_rol" class="form-control id_rol" placeholder="Rol:">';
+              $.each(usuarios.id_usuario, function(key, dato){
+                html += ' <option value="'+dato+'">'+usuarios.nombre[key]+'</option>';
+              });
+              html += '</select>';
+              $(".tableUsuarios").html(html);
               $("#exampleModal").modal("hide"); //Oculta el modal de ejemplo
               $(".contenidoSistema").html(res.mensaje); //Actualiza el contenido del sistema con el mensaje del servidor
               $("#mensajeSistema").modal("show"); //Muestra un modal con el mensaje del sistema

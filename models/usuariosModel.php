@@ -36,7 +36,7 @@
                $data["password"][$i] = $row["password"];
                $data["telefono"][$i] = $row["telefono"];
                $data["status"][$i] = $row["status"];
-               $data["fecha_altaUsuario"][$i] = $row["fecha_altaUsuario"];
+               $data["fecha_altaUsuario"][$i] = $this->fecha; 
                $data['nombreStatus'][$i] = $row['nombreStatus'];
                $data['colorStatus'][$i] = $row['colorStatus'];
                $i++;

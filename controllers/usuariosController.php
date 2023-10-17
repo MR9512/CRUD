@@ -36,6 +36,7 @@ class usuariosController extends coreController{
         //Obtiene los datos del usuario desde $_POST y guarda el usuario utilizando el método saveUsuario() del modelo usuariosModel
         $respuesta = $this->usuariosModel->saveUsuario($_POST);
         //Crea un array con un mensaje indicando que el usuario se ha creado correctamente
+        $retornar["usuarios"] = $this->usuariosModel->getUsuarios();
         $retornar['mensaje'] ="Usuario creado correctamente";
         //Convierte el array a formato JSON y lo imprime como respuesta
         echo json_encode($retornar);  
