@@ -1,6 +1,5 @@
-$(document).ready(function(){
   //Cuando se hace clic en un elemento con la clase "ver"
-  $(".ver").click(function(){
+  $(document).on("click", ".ver", function(event){
     //Obtiene el atributo "data-usuario" del elemento clickeado
     id_usuario = $(this).data("usuario");
     //Crea un objeto para configurar la solicitud AJAX
@@ -13,7 +12,7 @@ $(document).ready(function(){
     $("#infoModal").modal("show"); //Muestra un modal con información al usuario
   });
   //Cuando se hace clic en un elemento con la clase "editar"
-  $(".editar").click(function(){
+  $(document).on("click", ".editar", function(event){
     //Obtiene el atributo "data-usuario" del elemento clickeado
     id_usuario = $(this).data("usuario");
     //Crea un objeto para configurar la solicitud AJAX
@@ -26,7 +25,7 @@ $(document).ready(function(){
     $("#updateModal").modal("show"); //Muestra un modal de actualización al usuario
   });
   //Cuando se hace clic en un elemento con la clase "eliminar"
-  $(".eliminar").click(function(){
+  $(document).on("click", ".eliminar", function(event){
     //Obtiene el atributo "data-usuario" del elemento clickeado
     id_usuario = $(this).data("usuario");
     //Crea un objeto con el id del usuario, URL y otros datos para configurar la solicitud AJAX
@@ -103,15 +102,31 @@ $("#actualizarFormulario").on("submit", function(){
     type: 'post', //Método de la solicitud (en este caso, POST)
     data: formulario, //Datos serializados del formulario que se enviarán con la solicitud
     dataType: "json", //Tipo de datos que se esperan recibir en la respuesta (en este caso, JSON)
-    success: function(response) {
+    success: function(resp) {
+      var html = "";
+      var usuarios = resp.usuarios;
+      $.each(usuarios.id_usuario, function(key, dato){
+        html += '<tr class="usuario_' + dato[key] + '">';
+        html += '<td>' + usuarios.nombre[key] + '</td>';
+        html += '<td>' + usuarios.apellidos[key] + '</td>';
+        html += '<td>' + usuarios.rol[key] + '</td>';
+        html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>';
+        html += '<td width="8%">';
+        html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
+        html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
+        html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + dato[key] + '"></i>&nbsp;&nbsp;';
+        html += '</td>';
+        html += '</tr>';
+      });
+      $(".tableUsuarios").html(html);
       //Cuando la solicitud es exitosa, se ejecuta esta función
       $("#updateModal").modal("hide"); //Oculta el modal de actualización
-      $(".contenidoSistema").html(response.respuesta); //Actualiza el contenido del sistema con la respuesta del servidor
+      $(".contenidoSistema").html(resp.respuesta); //Actualiza el contenido del sistema con la respuesta del servidor
       $("#mensajeSistema").modal("show"); //Muestra un modal con el mensaje del sistema
     }
   });
 });
-}); 
+
   
   //Definición de la función peticionAjax que toma un objeto de configuración como parámetro
 function peticionAjax(obj) {
@@ -127,11 +142,19 @@ function peticionAjax(obj) {
             case "insertarUsuario":
               var html = "";
               var usuarios = res.usuarios;
-              html += '<select name="id_rol" name="id_rol" class="form-control id_rol" placeholder="Rol:">';
               $.each(usuarios.id_usuario, function(key, dato){
-                html += ' <option value="'+dato+'">'+usuarios.nombre[key]+'</option>';
+                html += '<tr class="usuario_' + dato[key] + '">';
+                html += '<td>' + usuarios.nombre[key] + '</td>';
+                html += '<td>' + usuarios.apellidos[key] + '</td>';
+                html += '<td>' + usuarios.rol[key] + '</td>';
+                html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>';
+                html += '<td width="8%">';
+                html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
+                html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
+                html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + dato[key] + '"></i>&nbsp;&nbsp;';
+                html += '</td>';
+                html += '</tr>';
               });
-              html += '</select>';
               $(".tableUsuarios").html(html);
               $("#exampleModal").modal("hide"); //Oculta el modal de ejemplo
               $(".contenidoSistema").html(res.mensaje); //Actualiza el contenido del sistema con el mensaje del servidor
@@ -184,6 +207,22 @@ function peticionAjax(obj) {
               break;
 
               case "deleteUsuario":
+              var html = "";
+              var usuarios = res.usuarios;
+              $.each(usuarios.id_usuario, function(key, dato){
+                  html += '<tr class="usuario_' + dato[key] + '">';
+                  html += '<td>' + usuarios.nombre[key] + '</td>';
+                  html += '<td>' + usuarios.apellidos[key] + '</td>';
+                  html += '<td>' + usuarios.rol[key] + '</td>';
+                  html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>';
+                  html += '<td width="8%">';
+                  html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
+                  html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
+                  html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + dato[key] + '"></i>&nbsp;&nbsp;';
+                  html += '</td>';
+                  html += '</tr>';
+              });
+              $(".tableUsuarios").html(html);   
               //Oculta el elemento del usuario específico en la interfaz utilizando su ID
               $(".usuario_" + obj.id_usuario).hide();
               //Muestra un modal con un mensaje del sistema
