@@ -5,7 +5,7 @@
     public function __construct(){
         require_once("DB/Conect.php");
         $con = new Conect();
-        $this->con = $con->conexion();
+        $this->con = $con->Conexion();
         $fecha = getdate();
         $this->fecha = $fecha['year'] . "-" . $fecha['mon'] . "-" . $fecha['mday'] . " " . date("H:i:s");
     }

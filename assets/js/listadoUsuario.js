@@ -1,4 +1,3 @@
-$(document).ready(function(){
   //Cuando se hace clic en un elemento con la clase "ver"
   $(document).on("click",".ver", function(event){
     //Obtiene el atributo "data-usuario" del elemento clickeado
@@ -93,26 +92,50 @@ $("#formulario").on("submit",function(){
   peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
   });
   //Cuando se envía el formulario con el id "actualizarFormulario"
-$("#actualizarFormulario").on("submit", function(){
-  event.preventDefault(); //Previene el comportamiento por defecto del formulario (recargar la página)
-  //Serializa los datos del formulario con el id "actualizarFormulario"
-  var formulario = $("#actualizarFormulario").serialize();
-  //Realiza una solicitud AJAX usando jQuery
-  $.ajax({
-    url: 'updateUsuario', //URL a la que se enviará la solicitud AJAX (para actualizar un usuario)
-    type: 'post', //Método de la solicitud (en este caso, POST)
-    data: formulario, //Datos serializados del formulario que se enviarán con la solicitud
-    dataType: "json", //Tipo de datos que se esperan recibir en la respuesta (en este caso, JSON)
-    success: function(response) {
-      //Cuando la solicitud es exitosa, se ejecuta esta función
-      $("#updateModal").modal("hide"); //Oculta el modal de actualización
-      $(".contenidoSistema").html(response.respuesta); //Actualiza el contenido del sistema con la respuesta del servidor
-      $("#mensajeSistema").modal("show"); //Muestra un modal con el mensaje del sistema
-    }
+  $("#actualizarFormulario").on("submit",function(){
+    event.preventDefault();
+    var formulario = $("#actualizarFormulario").serialize();
+    $.ajax({
+      url: 'updateUsuario',
+      type: 'post',
+      data: formulario,
+      dataType: "json",
+      success: function(response) {
+      datos = response.datos;
+      $(".nombreUsuario"+datos.id_usuario).html(datos.editarNombreUsuario);
+      $(".apellidosUsuario"+datos.id_usuario).html(datos.editarApellidosUsuario);
+      $(".rolUsuario"+datos.id_usuario).html(datos.rol);
+      $(".colorStatus"+datos.id_usuario).html(datos.estatus);
+      $(".colorStatus"+datos.id_usuario).removeClass("bg-success");
+      $(".colorStatus"+datos.id_usuario).removeClass("bg-warning");
+      $(".colorStatus"+datos.id_usuario).addClass(response.colorStatus);
+      $("#updateModal").modal("hide");
+      $(".contenidoSistema").html(response.respuesta);
+      $("#mensajeSistema").modal("show");   
+      }
   });
-});
+  });
 
-}); 
+  $(".tableUsuarios").on("submit",function(){
+    event.preventDefault();
+    var tableUsuarios = $(".tableUsuarios").serialize();
+    $.ajax({
+      url: 'deleteUsuario',
+      type: 'post',
+      data: tableUsuarios,
+      dataType: "json",
+      success: function(response) {
+      datos = response.datos;
+      $(".nombreUsuario"+datos.id_usuario).html(datos.nombre);
+      $(".apellidosUsuario"+datos.id_usuario).html(datos.apellidos);
+      $(".rolUsuario"+datos.id_usuario).html(datos.rol);
+      $(".colorStatus"+datos.id_usuario).html(datos.nombreStatus);
+      $(".colorStatus"+datos.id_usuario).removeClass("bg-success");
+      $(".colorStatus"+datos.id_usuario).removeClass("bg-warning");
+      $(".colorStatus"+datos.id_usuario).addClass(response.colorStatus);
+      }
+  });
+  });
   
   //Definición de la función peticionAjax que toma un objeto de configuración como parámetro
 function peticionAjax(obj) {
@@ -157,39 +180,36 @@ function peticionAjax(obj) {
               $(".verFechaUsuario").val(res.fecha_altaUsuario); //Establece el valor del campo "verFechaUsuario" con el valor de "res.fecha_altaUsuario"
             break;
              case "updateUsuario":
-              var statusActivo = ''; //Inicializa una variable para indicar el estado 'Activo' del usuario
-              var statusInactivo = ''; //Inicializa una variable para indicar el estado 'Inactivo' del usuario
+              var statusActivo = '';
+              var statusInactivo = '';
               if(res.status == 'Activo'){
-                  var statusActivo = 'selected'; //Si el estado del usuario es 'Activo', marca 'selected' para la opción 'Activo'
+                var statusActivo = 'selected';
               }
               if(res.status == 'Inactivo'){
-                  var statusInactivo = 'selected'; //Si el estado del usuario es 'Inactivo', marca 'selected' para la opción 'Inactivo'
+                var statusInactivo = 'selected';
               }
-              var selectStatus = ""; //Inicializa una cadena para almacenar el selector de estado del usuario
-              selectStatus += '<select class="form-select" name="editarStatusUsuario" aria-label="Default select example">'; //Agrega la apertura del tag select al selector
-              selectStatus += '<option value="1" '+statusActivo+'>Activo</option>'; //Agrega la opción 'Activo' al selector, marcándola como seleccionada si el estado es 'Activo'
-              selectStatus += '<option value="0" '+statusInactivo+'>Inactivo</option>'; //Agrega la opción 'Inactivo' al selector, marcándola como seleccionada si el estado es 'Inactivo'
-              selectStatus += '</select>'; //Agrega el cierre del tag select al selector
-
-              var selectRol = ""; //Inicializa una cadena para almacenar el selector de roles del usuario
-              selectRol += '<select class="form-select" name="editarRolUsuario" aria-label="Default select example">'; //Agrega la apertura del tag select al selector
-              var crearRol = res.listaUsuarios; // Obtiene la lista de roles del usuario desde la respuesta del servidor
-              $.each(crearRol.id_rol, function(key, dato){
-                    var selected = ""; //Inicializa la variable 'selected' para determinar si una opción está seleccionada
-                    selectRol += '<option value="'+dato+'" '+selected+'>'+res.listaUsuarios.nombreRol[key]+'</option>'; //Agrega opciones de roles al selector, marcando la opción como seleccionada si corresponde
+              var selectStatus = "";
+              selectStatus+= '<select class="form-select" name="editarStatusUsuario" aria-label="Default select example">';
+              selectStatus+='<option value="1" '+statusActivo+'>Activo</option>';
+              selectStatus+='<option value="0" '+statusInactivo+'>Inactivo</option>';
+              selectStatus+= '</select>';
+              var selectRol = "";
+              selectRol+= '<select class="form-select" name="editarRolUsuario" aria-label="Default select example">';
+              var crearRol = res.listaUsuarios;
+              $.each(crearRol.id_rol,function(key,dato){
+                var selected = "";
+              selectRol+='<option value="'+dato+'" '+selected+'>'+res.listaUsuarios.nombreRol[key]+'</option>';
               });
-              selectRol += '</select>'; //Agrega el cierre del tag select al selector
-
-              //Asigna los valores obtenidos de la respuesta del servidor a los campos de edición en el formulario
-              $(".editarId_usuario").val(res.id_usuario); //Asigna el ID del usuario al campo de edición de ID de usuario
-              $(".editarNombreUsuario").val(res.nombre); //Asigna el nombre del usuario al campo de edición de nombre de usuario
-              $(".editarApellidosUsuario").val(res.apellidos); //Asigna los apellidos del usuario al campo de edición de apellidos de usuario
-              $(".editarCorreoUsuario").val(res.correo); //Asigna el correo del usuario al campo de edición de correo de usuario
-              $(".editarContrasenaUsuario").val(res.password); //Asigna la contraseña del usuario al campo de edición de contraseña de usuario
-              $(".editarTelefonoUsuario").val(res.telefono); //Asigna el teléfono del usuario al campo de edición de teléfono de usuario
-              $(".editarRol").html(selectRol); //Agrega el selector de roles al campo de edición de rol de usuario
-              $(".editarStatusUsuario").html(selectStatus); //Agrega el selector de estado al campo de edición de estado de usuario
-              $(".editarFechaUsuario").val(res.fecha_altaUsuario); //Asigna la fecha de alta del usuario al campo de edición de fecha de alta de usuario
+              selectRol+= '</select>';
+              $(".editarId_usuario").val(res.id_usuario);
+              $(".editarNombreUsuario").val(res.nombre);
+              $(".editarApellidosUsuario").val(res.apellidos);
+              $(".editarCorreoUsuario").val(res.correo);
+              $(".editarContrasenaUsuario").val(res.password);
+              $(".editarTelefonoUsuario").val(res.telefono);
+              $(".editarRol").html(selectRol);
+              $(".editarStatusUsuario").html(selectStatus);
+              $(".editarFechaUsuario").val(res.fecha_altaUsuario);
               break;
 
               case "deleteUsuario":

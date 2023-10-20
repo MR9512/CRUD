@@ -51,26 +51,18 @@ class usuariosController extends coreController{
         //Convierte el array con detalles del usuario y la lista de roles a formato JSON y lo imprime como respuesta
         echo json_encode($respuesta);
     }
-
     public function updateUsuario(){
-        // Establece el campo 'status' del usuario a '1'
         $_POST["status"] = 1;
-        // Actualiza el usuario utilizando el método updateUsuario() del modelo usuariosModel
         $respuesta = $this->usuariosModel->updateUsuario($_POST);
-    
-        if ($respuesta) {
-            // Si la actualización fue exitosa, crea un array con los datos actualizados del usuario
-            $usuarioActualizado = $this->usuariosModel->getUsuario($_POST['id_usuario']); // Reemplaza 'id_usuario' con el nombre del campo en tu base de datos
-            // Crea un array de respuesta con los datos del usuario actualizado
-            $resp["respuesta"] = 'Usuario modificado correctamente';
-            $resp["usuario"] = $usuarioActualizado;
-        } else {
-            // Si la actualización falla, envía un mensaje de error
-            $resp["respuesta"] = 'Error al modificar el usuario';
-        }
-        // Convierte el array a formato JSON y lo imprime como respuesta
+        $resp["respuesta"] = 'Usuario modificado correctamente';
+        $resp['datos'] = $_POST;
+        $rol = $this->usuariosModel->getUsuarios($_POST['id_usuario']);
+        $resp["datos"]["rol"] = $rol["rol"];
+        $resp["datos"]["estatus"] = $rol["estatus"];
+        $colorStatus = $this->usuariosModel->getUsuarios($_POST['id_usuario']);
+        $resp["colorStatus"] = $rol["colorStatus"];
         echo json_encode($resp);
-    }
+      }
     
 
     //Método para eliminar un usuario
