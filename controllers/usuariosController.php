@@ -52,17 +52,26 @@ class usuariosController extends coreController{
         echo json_encode($respuesta);
     }
 
-    //Método para actualizar un usuario existente
     public function updateUsuario(){
-        //Establece el campo 'status' del usuario a '1'
+        // Establece el campo 'status' del usuario a '1'
         $_POST["status"] = 1;
-        //Actualiza el usuario utilizando el método updateUsuario() del modelo usuariosModel
+        // Actualiza el usuario utilizando el método updateUsuario() del modelo usuariosModel
         $respuesta = $this->usuariosModel->updateUsuario($_POST);
-        //Crea un array con un mensaje indicando que el usuario se ha modificado correctamente
-        $resp["respuesta"] = 'Usuario modificado correctamente';
-        //Convierte el array a formato JSON y lo imprime como respuesta
+    
+        if ($respuesta) {
+            // Si la actualización fue exitosa, crea un array con los datos actualizados del usuario
+            $usuarioActualizado = $this->usuariosModel->getUsuario($_POST['id_usuario']); // Reemplaza 'id_usuario' con el nombre del campo en tu base de datos
+            // Crea un array de respuesta con los datos del usuario actualizado
+            $resp["respuesta"] = 'Usuario modificado correctamente';
+            $resp["usuario"] = $usuarioActualizado;
+        } else {
+            // Si la actualización falla, envía un mensaje de error
+            $resp["respuesta"] = 'Error al modificar el usuario';
+        }
+        // Convierte el array a formato JSON y lo imprime como respuesta
         echo json_encode($resp);
     }
+    
 
     //Método para eliminar un usuario
     public function deleteUsuario(){

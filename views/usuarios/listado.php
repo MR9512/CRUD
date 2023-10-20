@@ -73,16 +73,6 @@
               Favor de ingresar un número telefónico
             </div>
           </div>
-
-          <!-- Campo para ingresar la fecha de registro del usuario -->
-          <div class="col-md-6">
-            <label for="inputCity" class="form-label">Fecha</label>
-            <input type="date" name="fechaUsuario" class="form-control correoUsuario" id="inputCity">
-            <!-- Mensaje de error para la fecha de registro del usuario (se muestra si no se ingresa una fecha) -->
-            <div class="error_correoUsuario" style="display:none;color:red">
-              Favor de ingresar una fecha
-            </div>
-          </div>
           
           <!-- Campo para seleccionar el rol del usuario desde una lista desplegable -->
           <div class="col-md-6">
@@ -193,15 +183,15 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modificar usuario</h5>
+        <h5 class="modal-title" id="updateModal">Modificar usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
 
+      <div class="modal-body">
       <form class="row g-3 needs-validation" novalidate id="actualizarFormulario">
   <div class="col-md-6">
     <label for="inputCity" class="form-label">Nombre</label>

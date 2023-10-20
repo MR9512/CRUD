@@ -7,7 +7,7 @@
         $con = new Conect();
         $this->con = $con->conexion();
         $fecha = getdate();
-        $this->fecha = $fecha['year'] . "-" . $fecha['mon'] . "-" . $fecha['mday'];
+        $this->fecha = $fecha['year'] . "-" . $fecha['mon'] . "-" . $fecha['mday'] . " " . date("H:i:s");
     }
 
     public function getUsuarios($condicion = null, $rol = null){
@@ -88,7 +88,7 @@
     }
 
     public function deleteUsuario($id_usuario){
-        $query = "UPDATE usuarios SET status = 0 WHERE id_usuario = $id_usuario";
+        $query = "DELETE FROM usuarios WHERE id_usuario = $id_usuario";
         mysqli_query($this->con, $query);
         return true;
     }
