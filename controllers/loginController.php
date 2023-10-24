@@ -1,6 +1,10 @@
 <?php
 class loginController
 {
+    public $loginModel;
+    public $loginCSS;
+    public $loginJS;
+    
     public function __construct()
     {
         //Incluye el modelo de login

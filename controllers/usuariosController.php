@@ -3,13 +3,17 @@
 require_once(__DIR__."/../core/coreController.php");
 //Define la clase usuariosController que extiende de coreController
 class usuariosController extends coreController{
+    public $usuariosModel;
+    public $generalesModel;
+    public $rol;
+    public $js;
     //Constructor de la clase
     public function __construct(){
         //Llama al constructor de la clase padre (coreController) para inicializaciones comunes
         parent::__construct();
         //Importa los modelos necesarios para las operaciones relacionadas con usuarios y roles
-        require_once("Models/usuariosModel.php");
-        require_once("Models/generalesModel.php");
+        require_once("models/usuariosModel.php");
+        require_once("models/generalesModel.php");
         //Crea instancias de los modelos usuariosModel y generalesModel
         $this->usuariosModel = new usuariosModel();
         $this->generalesModel = new generalesModel();

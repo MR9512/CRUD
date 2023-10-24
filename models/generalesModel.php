@@ -1,13 +1,14 @@
 <?php
 // Define la clase generalesModel
 class generalesModel{
+    private $con;
     // Constructor de la clase
     public function __construct(){
         //Importa el archivo de conexión a la base de datos (Conect.php)
-        require_once("DB/Conect.php");
+        require_once("db/Conect.php");
         // Crea una nueva instancia de la clase Conect para establecer la conexión a la base de datos
         $con = new Conect();
-        $this->con = $con -> Conexion();
+        $this->con = $con->conexion();
     }
 
     //Método para obtener la lista de roles de usuario

@@ -1,6 +1,7 @@
 <?php
 //Encapsula la lógica de enrutamiento
 class router{
+    public $errorCSS;
     //Almacenaran el nombre del controlador y el método que se ejecutarán en función de la URL solicitada.
     private $controller;
     private $method;

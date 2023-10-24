@@ -2,7 +2,7 @@
 //Encapsula la funcionalidad relacionada con la conexión a la base de datos
 class Conect {
    //Establece la conexión a la base de datos MySQL
-   public function Conexion() {
+   public function conexion() {
       //Utilizamos un bloque try-catch para capturar excepciones.
        try {
             //Se piden 4 parametros para establecer la conexión a la BD solicitada

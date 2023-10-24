@@ -24,18 +24,17 @@
     peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
     $("#updateModal").modal("show"); //Muestra un modal de actualización al usuario
   });
-  //Cuando se hace clic en un elemento con la clase "eliminar"
-  $(document).on("click",".eliminar", function(event){
-    //Obtiene el atributo "data-usuario" del elemento clickeado
+
+  $(document).on("click", ".eliminar", function() {
     id_usuario = $(this).data("usuario");
-    //Crea un objeto con el id del usuario, URL y otros datos para configurar la solicitud AJAX
     var obj = {};
-    obj.id_usuario = id_usuario; //Id del usuario a ser eliminado
-    obj.url = "deleteUsuario"; //URL a la que se enviará la solicitud AJAX
-    obj.data = {id_usuario:id_usuario}; //Datos que se enviarán con la solicitud
-    obj.type = "POST"; //Método de la solicitud (en este caso, POST)
-    obj.accion = "deleteUsuario"; //Acción que se realizará en el servidor
-    peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
+    obj.id_usuario = id_usuario;
+    obj.url = "deleteUsuario";
+    obj.data = {id_usuario:id_usuario};
+    obj.type = "POST";
+    obj.accion = "deleteUsuario";
+    console.log(obj);
+    peticionAjax(obj);
   });
 
   // Cuando se envía el formulario con el id "formulario"
@@ -116,7 +115,7 @@ $("#formulario").on("submit",function(){
   });
   });
 
-  $(".tableUsuarios").on("submit",function(){
+  $(document).on("click",".tableUsuarios", function(event){
     event.preventDefault();
     var tableUsuarios = $(".tableUsuarios").serialize();
     $.ajax({
@@ -125,14 +124,16 @@ $("#formulario").on("submit",function(){
       data: tableUsuarios,
       dataType: "json",
       success: function(response) {
+      html = ""; 
       datos = response.datos;
-      $(".nombreUsuario"+datos.id_usuario).html(datos.nombre);
-      $(".apellidosUsuario"+datos.id_usuario).html(datos.apellidos);
-      $(".rolUsuario"+datos.id_usuario).html(datos.rol);
-      $(".colorStatus"+datos.id_usuario).html(datos.nombreStatus);
-      $(".colorStatus"+datos.id_usuario).removeClass("bg-success");
-      $(".colorStatus"+datos.id_usuario).removeClass("bg-warning");
-      $(".colorStatus"+datos.id_usuario).addClass(response.colorStatus);
+      html += $(".nombreUsuario"+datos.id_usuario).html(datos.nombre);
+      html += $(".apellidosUsuario"+datos.id_usuario).html(datos.apellidos);
+      html += $(".rolUsuario"+datos.id_usuario).html(datos.rol);
+      html += $(".colorStatus"+datos.id_usuario).html(datos.nombreStatus);
+      html += $(".colorStatus"+datos.id_usuario).removeClass("bg-success");
+      html += $(".colorStatus"+datos.id_usuario).removeClass("bg-warning");
+      html += $(".colorStatus"+datos.id_usuario).addClass(response.colorStatus);
+      $(".tableUsuarios").html(html)
       }
   });
   });
@@ -152,7 +153,7 @@ function peticionAjax(obj) {
               var html = "";
               var usuarios = res.usuarios;
               $.each(usuarios.id_usuario, function(key, dato){
-                html += '<tr class="usuario_' + dato[key] + '">';
+                html += '<tr class="usuario_' + dato + '">';
                 html += '<td>' + usuarios.nombre[key] + '</td>';
                 html += '<td>' + usuarios.apellidos[key] + '</td>';
                 html += '<td>' + usuarios.rol[key] + '</td>';
@@ -160,7 +161,7 @@ function peticionAjax(obj) {
                 html += '<td width="8%">';
                 html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
                 html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
-                html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + dato[key] + '"></i>&nbsp;&nbsp;';
+                html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
                 html += '</td>';
                 html += '</tr>';
               });
@@ -215,10 +216,10 @@ function peticionAjax(obj) {
               case "deleteUsuario":
               //Oculta el elemento del usuario específico en la interfaz utilizando su ID
               $(".usuario_" + obj.id_usuario).hide();
-              //Muestra un modal con un mensaje del sistema
-              $("#mensajeSistema").modal("show");
               //Actualiza el contenido del sistema con el mensaje de respuesta del servidor
               $(".contenidoSistema").html(res.respuesta);
+              //Muestra un modal con un mensaje del sistema
+              $("#mensajeSistema").modal("show");
               break;
             
       }

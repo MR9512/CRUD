@@ -1,6 +1,8 @@
 <?php
 class loginModel
 {
+   public $con;
+   public $fecha;
     // Constructor de la clase
     public function __construct()
     {

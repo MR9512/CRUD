@@ -1,9 +1,9 @@
 <?php 
 
-   require_once("Config/config.php");
-   require_once("Router/router.php");
+   require_once("config/config.php");
+   require_once("router/router.php");
 
-   $router = new Router();
+   $router = new router();
    $router->run();
 
 ?>

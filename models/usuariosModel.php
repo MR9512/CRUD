@@ -1,11 +1,13 @@
 <?php 
 
  class usuariosModel{
-
+    public $con;
+    public $fecha;
+    
     public function __construct(){
-        require_once("DB/Conect.php");
+        require_once("db/Conect.php");
         $con = new Conect();
-        $this->con = $con->Conexion();
+        $this->con = $con->conexion();
         $fecha = getdate();
         $this->fecha = $fecha['year'] . "-" . $fecha['mon'] . "-" . $fecha['mday'] . " " . date("H:i:s");
     }
