@@ -138,6 +138,7 @@
   </tbody>
 </table>
 
+<!-- Modal para ver usuario -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -145,44 +146,46 @@
         <h5 class="modal-title" id="exampleModalLabel">Ver usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
       <form class="row g-3 needs-validation" novalidate id="formulario">
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Nombre</label>
-    <input type="text" name="verNombreUsuario" class="form-control verNombreUsuario" id="inputCity" disabled>
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Apellidos</label>
-    <input type="text" name="verApellidosUsuario" class="form-control verApellidosUsuario" id="inputCity" disabled>
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Correo</label>
-    <input type="text" name="verCorreoUsuario" class="form-control verCorreoUsuario" id="inputCity" disabled>
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Contraseña</label>
-    <input type="text" name="verContrasenaUsuario" class="form-control verContrasenaUsuario" id="inputCity" disabled>
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Telefono</label>
-    <input type="text" name="verTelefonoUsuario" class="form-control verTelefonoUsuario" id="inputCity" disabled>
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Rol</label>
-    <input type="text" name="verRolUsuario" class="form-control verRolUsuario" id="inputCity" disabled>
-  </div>
-     <div class="col-md-6">
-    <label for="inputCity" class="form-label">Fecha de Subida</label>
-    <input type="text" name="verFechaUsuario"class="form-control verFechaUsuario" id="inputCity" disabled>
-    </div>
-     </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
+        <div class="modal-body">
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Nombre</label>
+            <input type="text" name="verNombreUsuario" class="form-control verNombreUsuario" id="inputCity" disabled>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Apellidos</label>
+            <input type="text" name="verApellidosUsuario" class="form-control verApellidosUsuario" id="inputCity" disabled>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Correo</label>
+            <input type="text" name="verCorreoUsuario" class="form-control verCorreoUsuario" id="inputCity" disabled>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Contraseña</label>
+            <input type="text" name="verContrasenaUsuario" class="form-control verContrasenaUsuario" id="inputCity" disabled>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Telefono</label>
+            <input type="text" name="verTelefonoUsuario" class="form-control verTelefonoUsuario" id="inputCity" disabled>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Rol</label>
+            <input type="text" name="verRolUsuario" class="form-control verRolUsuario" id="inputCity" disabled>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Fecha de Subida</label>
+            <input type="text" name="verFechaUsuario" class="form-control verFechaUsuario" id="inputCity" disabled>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+<!-- Modal para editar usuario -->
 <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -190,50 +193,47 @@
         <h5 class="modal-title" id="updateModal">Modificar usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
-      <div class="modal-body">
       <form class="row g-3 needs-validation" novalidate id="actualizarFormulario">
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Nombre</label>
-    <input type="text" name="editarNombreUsuario" class="form-control editarNombreUsuario" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Apellidos</label>
-    <input type="text" name="editarApellidosUsuario" class="form-control editarApellidosUsuario" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Correo</label>
-    <input type="text" name="editarCorreoUsuario" class="form-control editarCorreoUsuario" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Contraseña</label>
-    <input type="text" name="editarContrasenaUsuario" class="form-control editarContrasenaUsuario" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Telefono</label>
-    <input type="text" name="editarTelefonoUsuario" class="form-control editarTelefonoUsuario" id="inputCity">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Rol</label>
-    <div class="editarRol"></div>
-     </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">Status</label>
-    <div class="editarStatusUsuario"></div>
-    <input type="hidden" class="editarId_usuario" name="id_usuario">
-     </div>
-    <div class="col-md-6">
-    <label for="inputCity" class="form-label">Fecha de Subida</label>
-    <input type="date" name="editarFechaUsuario"class="form-control editarFechaUsuario" id="inputCity">
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary updateUsuario">Actualizar</button>
-      </div>
-    </div>
-     </form>
-      </div>
-      
+        <div class="modal-body">
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Nombre</label>
+            <input type="text" name="editarNombreUsuario" class="form-control editarNombreUsuario" id="inputCity">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Apellidos</label>
+            <input type="text" name="editarApellidosUsuario" class="form-control editarApellidosUsuario" id="inputCity">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Correo</label>
+            <input type="text" name="editarCorreoUsuario" class="form-control editarCorreoUsuario" id="inputCity">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Contraseña</label>
+            <input type="text" name="editarContrasenaUsuario" class="form-control editarContrasenaUsuario" id="inputCity">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Telefono</label>
+            <input type="text" name="editarTelefonoUsuario" class="form-control editarTelefonoUsuario" id="inputCity">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Rol</label>
+            <div class="editarRol"></div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Status</label>
+            <div class="editarStatusUsuario"></div>
+            <input type="hidden" class="editarId_usuario" name="id_usuario">
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Fecha de Subida</label>
+            <input type="date" name="editarFechaUsuario" class="form-control editarFechaUsuario" id="inputCity">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary updateUsuario">Actualizar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-

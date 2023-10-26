@@ -25,19 +25,19 @@
     $("#updateModal").modal("show"); //Muestra un modal de actualización al usuario
   });
 
-  $(document).on("click", ".eliminar", function() {
-    id_usuario = $(this).data("usuario");
-    var obj = {};
-    obj.id_usuario = id_usuario;
-    obj.url = "deleteUsuario";
-    obj.data = {id_usuario:id_usuario};
-    obj.type = "POST";
-    obj.accion = "deleteUsuario";
-    console.log(obj);
-    peticionAjax(obj);
-  });
+  //Cuando se hace clic en un elemento con la clase "eliminar"
+$(document).on("click", ".eliminar", function() {
+  id_usuario = $(this).data("usuario");   //Obtiene el valor del atributo "data-usuario" del elemento clickeado
+  var obj = {}; //Crea un objeto para almacenar los datos de la solicitud AJAX
+  obj.id_usuario = id_usuario; //Asigna el valor de id_usuario al objeto
+  obj.url = "deleteUsuario"; //Especifica la URL a la que se enviará la solicitud AJAX
+  obj.data = {id_usuario: id_usuario}; //Datos que se enviarán con la solicitud, en este caso, el id_usuario
+  obj.type = "POST"; //Método de la solicitud (en este caso, POST)
+  obj.accion = "deleteUsuario"; //Acción que se realizará en el servidor (eliminar usuario)
+  peticionAjax(obj);  //Llama a la función peticionAjax y pasa el objeto como parámetro para realizar la solicitud AJAX
+});
 
-  // Cuando se envía el formulario con el id "formulario"
+  //Cuando se envía el formulario con el id "formulario"
 $("#formulario").on("submit",function(){
     event.preventDefault(); //Previene el comportamiento por defecto del formulario (recargar la página)
     //Verifica si el campo de nombre de usuario está vacío
@@ -90,54 +90,47 @@ $("#formulario").on("submit",function(){
   obj.accion = "insertarUsuario"; //Acción que se realizará en el servidor (insertar un usuario)
   peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
   });
-  //Cuando se envía el formulario con el id "actualizarFormulario"
-  $("#actualizarFormulario").on("submit",function(){
-    event.preventDefault();
-    var formulario = $("#actualizarFormulario").serialize();
-    $.ajax({
-      url: 'updateUsuario',
-      type: 'post',
-      data: formulario,
-      dataType: "json",
-      success: function(response) {
-      datos = response.datos;
-      $(".nombreUsuario"+datos.id_usuario).html(datos.editarNombreUsuario);
-      $(".apellidosUsuario"+datos.id_usuario).html(datos.editarApellidosUsuario);
-      $(".rolUsuario"+datos.id_usuario).html(datos.rol);
-      $(".colorStatus"+datos.id_usuario).html(datos.estatus);
-      $(".colorStatus"+datos.id_usuario).removeClass("bg-success");
-      $(".colorStatus"+datos.id_usuario).removeClass("bg-warning");
-      $(".colorStatus"+datos.id_usuario).addClass(response.colorStatus);
-      $("#updateModal").modal("hide");
-      $(".contenidoSistema").html(response.respuesta);
-      $("#mensajeSistema").modal("show");   
-      }
-  });
-  });
 
-  $(document).on("click",".tableUsuarios", function(event){
-    event.preventDefault();
-    var tableUsuarios = $(".tableUsuarios").serialize();
-    $.ajax({
-      url: 'deleteUsuario',
-      type: 'post',
-      data: tableUsuarios,
-      dataType: "json",
-      success: function(response) {
-      html = ""; 
-      datos = response.datos;
-      html += $(".nombreUsuario"+datos.id_usuario).html(datos.nombre);
-      html += $(".apellidosUsuario"+datos.id_usuario).html(datos.apellidos);
-      html += $(".rolUsuario"+datos.id_usuario).html(datos.rol);
-      html += $(".colorStatus"+datos.id_usuario).html(datos.nombreStatus);
-      html += $(".colorStatus"+datos.id_usuario).removeClass("bg-success");
-      html += $(".colorStatus"+datos.id_usuario).removeClass("bg-warning");
-      html += $(".colorStatus"+datos.id_usuario).addClass(response.colorStatus);
-      $(".tableUsuarios").html(html)
-      }
+ //Cuando se envía el formulario con el id "actualizarFormulario"
+$("#actualizarFormulario").on("submit", function(event) {
+  event.preventDefault();
+  var formulario = $("#actualizarFormulario").serialize();
+  console.log("FORMULARIO",formulario); //Imprime el objeto en la consola
+  $.ajax({
+    url: 'updateUsuario',
+    type: 'post',
+    data: formulario,
+    dataType: "json",
+    success: function(response) {
+      // Actualiza los campos de visualización con los nuevos datos del usuario
+      $(".verNombreUsuario").val(response.datos.nombre);
+      $(".verApellidosUsuario").val(response.datos.apellidos);
+      $(".verCorreoUsuario").val(response.datos.correo);
+      $(".verContrasenaUsuario").val(response.datos.password);
+      $(".verTelefonoUsuario").val(response.datos.telefono);
+      $(".verRolUsuario").val(response.datos.rol);
+      $(".verFechaUsuario").val(response.datos.fecha_altaUsuario);
+
+      // Actualiza el estado y color del usuario
+      $(".colorStatus").html(response.datos.estatus);
+      $(".colorStatus").removeClass("bg-success bg-warning").addClass(response.colorStatus);
+
+      // Cierra el modal de actualización
+      $("#updateModal").modal("hide");
+
+      // Actualiza el contenido del sistema con el mensaje de respuesta del servidor
+      $(".contenidoSistema").html(response.respuesta);
+
+      // Muestra un modal con el mensaje del sistema
+      $("#mensajeSistema").modal("show");
+    },
+    error: function(xhr, status) {
+      // Maneja errores si la solicitud falla
+    }
   });
-  });
-  
+});
+
+
   //Definición de la función peticionAjax que toma un objeto de configuración como parámetro
 function peticionAjax(obj) {
   //Realiza una solicitud AJAX usando jQuery
@@ -148,28 +141,39 @@ function peticionAjax(obj) {
     dataType: "json", //Tipo de datos que se esperan recibir en la respuesta (en este caso, JSON)
     success: function(res) {
       //Cuando la solicitud es exitosa, se ejecuta esta función
-      switch(obj.accion) {
-            case "insertarUsuario":
-              var html = "";
-              var usuarios = res.usuarios;
-              $.each(usuarios.id_usuario, function(key, dato){
-                html += '<tr class="usuario_' + dato + '">';
-                html += '<td>' + usuarios.nombre[key] + '</td>';
-                html += '<td>' + usuarios.apellidos[key] + '</td>';
-                html += '<td>' + usuarios.rol[key] + '</td>';
-                html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>';
-                html += '<td width="8%">';
-                html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
-                html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
-                html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;';
-                html += '</td>';
-                html += '</tr>';
-              });
-              $(".tableUsuarios").html(html);
-              $("#exampleModal").modal("hide"); //Oculta el modal de ejemplo
-              $(".contenidoSistema").html(res.mensaje); //Actualiza el contenido del sistema con el mensaje del servidor
-              $("#mensajeSistema").modal("show"); //Muestra un modal con el mensaje del sistema
+      switch (obj.accion) {
+
+        case "insertarUsuario":
+            //Inicializa una variable HTML
+            var html = "";
+            //Obtiene los datos de usuarios de la respuesta AJAX
+            var usuarios = res.usuarios;
+            //Itera a través de los datos de usuarios y construye una tabla HTML
+            $.each(usuarios.id_usuario, function(key, dato) {
+              //Construye una fila de tabla para cada usuario en los datos recibidos
+              html += '<tr class="usuario_' + dato + '">'; // Inicia la fila de la tabla con una clase específica para cada usuario
+              html += '<td>' + usuarios.nombre[key] + '</td>'; // Agrega la celda para el nombre del usuario
+              html += '<td>' + usuarios.apellidos[key] + '</td>'; // Agrega la celda para los apellidos del usuario
+              html += '<td>' + usuarios.rol[key] + '</td>'; // Agrega la celda para el rol del usuario
+              html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>'; // Agrega la celda para el estado del usuario con una clase específica
+              html += '<td width="8%">'; // Celda para los iconos de acciones con un ancho específico
+              //Agrega iconos para ver, editar y eliminar usuarios, cada uno con su clase específica y atributo de datos para el ID del usuario
+              html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para ver usuario
+              html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para editar usuario
+              html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para eliminar usuario
+              html += '</td>'; // Cierra la celda de acciones
+              html += '</tr>'; // Cierra la fila de la tabla
+            });
+            //Actualiza el contenido de la tabla con la nueva estructura HTML
+            $(".tableUsuarios").html(html);
+            //Oculta el modal con el ID "exampleModal"
+            $("#exampleModal").modal("hide");
+            //Actualiza el contenido del sistema con el mensaje de respuesta del servidor
+            $(".contenidoSistema").html(res.mensaje);
+            //Muestra un modal con el mensaje del sistema
+            $("#mensajeSistema").modal("show");
             break;
+
             case "getUsuario":
               // Actualiza los valores de los campos de visualización con la información del usuario obtenida de la respuesta del servidor
               $(".verNombreUsuario").val(res.nombre); //Establece el valor del campo "verNombreUsuario" con el valor de "res.nombre"
@@ -180,36 +184,50 @@ function peticionAjax(obj) {
               $(".verRolUsuario").val(res.rol); //Establece el valor del campo "verRolUsuario" con el valor de "res.rol"
               $(".verFechaUsuario").val(res.fecha_altaUsuario); //Establece el valor del campo "verFechaUsuario" con el valor de "res.fecha_altaUsuario"
             break;
-             case "updateUsuario":
+
+            case "updateUsuario":
+              //Variables para manejar las opciones seleccionadas en los selectores de estado y rol
               var statusActivo = '';
               var statusInactivo = '';
-              if(res.status == 'Activo'){
+              //Verifica el estado del usuario y selecciona la opción correspondiente en el selector de estado
+              if (res.status == 'Activo') {
                 var statusActivo = 'selected';
               }
-              if(res.status == 'Inactivo'){
+              if (res.status == 'Inactivo') {
                 var statusInactivo = 'selected';
               }
+              //Construye el selector de estado con las opciones "Activo" e "Inactivo"
               var selectStatus = "";
-              selectStatus+= '<select class="form-select" name="editarStatusUsuario" aria-label="Default select example">';
-              selectStatus+='<option value="1" '+statusActivo+'>Activo</option>';
-              selectStatus+='<option value="0" '+statusInactivo+'>Inactivo</option>';
-              selectStatus+= '</select>';
+              selectStatus += '<select class="form-select" name="editarStatusUsuario" aria-label="Default select example">';
+              selectStatus += '<option value="1" ' + statusActivo + '>Activo</option>';
+              selectStatus += '<option value="0" ' + statusInactivo + '>Inactivo</option>';
+              selectStatus += '</select>';
+              //Construye el selector de rol basado en los datos recibidos del servidor
               var selectRol = "";
-              selectRol+= '<select class="form-select" name="editarRolUsuario" aria-label="Default select example">';
+              selectRol += '<select class="form-select" name="editarRolUsuario" aria-label="Default select example">';
               var crearRol = res.listaUsuarios;
-              $.each(crearRol.id_rol,function(key,dato){
+              //Itera a través de los datos de roles y construye las opciones del selector de rol
+              $.each(crearRol.id_rol, function (key, dato) {
                 var selected = "";
-              selectRol+='<option value="'+dato+'" '+selected+'>'+res.listaUsuarios.nombreRol[key]+'</option>';
+                //Verifica si el rol actual es el mismo que el del usuario y lo marca como seleccionado
+                if (dato == res.id_rol) {
+                  selected = "selected";
+                }
+                //Agrega la opción del selector de rol con el nombre del rol y su ID como valor
+                selectRol += '<option value="' + dato + '" ' + selected + '>' + res.listaUsuarios.nombreRol[key] + '</option>';
               });
-              selectRol+= '</select>';
+              selectRol += '</select>';
+              //Llena los campos de entrada con los datos del usuario recibidos del servidor
               $(".editarId_usuario").val(res.id_usuario);
               $(".editarNombreUsuario").val(res.nombre);
               $(".editarApellidosUsuario").val(res.apellidos);
               $(".editarCorreoUsuario").val(res.correo);
               $(".editarContrasenaUsuario").val(res.password);
               $(".editarTelefonoUsuario").val(res.telefono);
+              //Llena los selectores de estado y rol con las opciones construidas previamente
               $(".editarRol").html(selectRol);
               $(".editarStatusUsuario").html(selectStatus);
+              //Llena el campo de fecha de alta del usuario con la fecha recibida del servidor
               $(".editarFechaUsuario").val(res.fecha_altaUsuario);
               break;
 
