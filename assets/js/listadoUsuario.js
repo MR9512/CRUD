@@ -101,28 +101,34 @@ $("#actualizarFormulario").on("submit", function(event) {
     data: formulario,
     dataType: "json",
     success: function(response) {
-      console.log("Datos",response); //Imprime el objeto en la consola
-      // Actualiza los campos de visualización con los nuevos datos del usuario
-      $(".verNombreUsuario").val(response.datos.nombre);
-      $(".verApellidosUsuario").val(response.datos.apellidos);
-      $(".verCorreoUsuario").val(response.datos.correo);
-      $(".verContrasenaUsuario").val(response.datos.password);
-      $(".verTelefonoUsuario").val(response.datos.telefono);
-      $(".verRolUsuario").val(response.datos.rol);
-      $(".verFechaUsuario").val(response.datos.fecha_altaUsuario);
-
-      // Actualiza el estado y color del usuario
-      $(".colorStatus").html(response.datos.estatus);
-      $(".colorStatus").removeClass("bg-success bg-warning").addClass(response.colorStatus);
-
+           //Inicializa una variable HTML
+           var html = "";
+           //Obtiene los datos de usuarios de la respuesta AJAX
+           var usuarios = response.usuarios;
+           //Itera a través de los datos de usuarios y construye una tabla HTML
+           $.each(usuarios.id_usuario, function(key, dato) {
+             //Construye una fila de tabla para cada usuario en los datos recibidos
+             html += '<tr class="usuario_' + dato + '">'; // Inicia la fila de la tabla con una clase específica para cada usuario
+             html += '<td>' + usuarios.nombre[key] + '</td>'; // Agrega la celda para el nombre del usuario
+             html += '<td>' + usuarios.apellidos[key] + '</td>'; // Agrega la celda para los apellidos del usuario
+             html += '<td>' + usuarios.rol[key] + '</td>'; // Agrega la celda para el rol del usuario
+             html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>'; // Agrega la celda para el estado del usuario con una clase específica
+             html += '<td width="8%">'; // Celda para los iconos de acciones con un ancho específico
+             //Agrega iconos para ver, editar y eliminar usuarios, cada uno con su clase específica y atributo de datos para el ID del usuario
+             html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para ver usuario
+             html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para editar usuario
+             html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para eliminar usuario
+             html += '</td>'; // Cierra la celda de acciones
+             html += '</tr>'; // Cierra la fila de la tabla
+           });
+      $(".tableUsuarios").html(html); // Agrega la nueva fila a la tabla
       // Cierra el modal de actualización
       $("#updateModal").modal("hide");
-
       // Actualiza el contenido del sistema con el mensaje de respuesta del servidor
       $(".contenidoSistema").html(response.respuesta);
-
       // Muestra un modal con el mensaje del sistema
       $("#mensajeSistema").modal("show");
+      
     },
     error: function(xhr, status) {
       // Maneja errores si la solicitud falla

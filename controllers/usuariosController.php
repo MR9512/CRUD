@@ -3,10 +3,10 @@
 require_once(__DIR__."/../core/coreController.php");
 //Define la clase usuariosController que extiende de coreController
 class usuariosController extends coreController{
-    public $usuariosModel;
-    public $generalesModel;
-    public $rol;
-    public $js;
+    private $usuariosModel;
+    private $generalesModel;
+    private $rol;
+    private $js;
     //Constructor de la clase
     public function __construct(){
         //Llama al constructor de la clase padre (coreController) para inicializaciones comunes
@@ -58,11 +58,11 @@ class usuariosController extends coreController{
     public function updateUsuario(){
         $_POST["status"] = 1;
         $respuesta = $this->usuariosModel->updateUsuario($_POST);
+        $resp["usuarios"] = $this->usuariosModel->getUsuarios();
         $resp["respuesta"] = 'Usuario modificado correctamente';
-        $resp['datos'] = $_POST;
         $rol = $this->usuariosModel->getUsuarios($_POST['status']);
-        $resp["datos"]["rol"] = $rol["rol"];
-        $resp["datos"]["status"] = $rol["status"];
+        $resp["usuarios"]["rol"] = $rol["rol"];
+        $resp["usuarios"]["status"] = $rol["status"];
         $colorStatus = $this->usuariosModel->getUsuarios($_POST['status']);
         $resp["colorStatus"] = $rol["colorStatus"];
         echo json_encode($resp);
