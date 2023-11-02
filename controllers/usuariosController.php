@@ -60,10 +60,10 @@ class usuariosController extends coreController{
         $respuesta = $this->usuariosModel->updateUsuario($_POST);
         $resp["respuesta"] = 'Usuario modificado correctamente';
         $resp['datos'] = $_POST;
-        $rol = $this->usuariosModel->getUsuarios($_POST['id_usuario']);
+        $rol = $this->usuariosModel->getUsuarios($_POST['status']);
         $resp["datos"]["rol"] = $rol["rol"];
-        $resp["datos"]["estatus"] = $rol["estatus"];
-        $colorStatus = $this->usuariosModel->getUsuarios($_POST['id_usuario']);
+        $resp["datos"]["status"] = $rol["status"];
+        $colorStatus = $this->usuariosModel->getUsuarios($_POST['status']);
         $resp["colorStatus"] = $rol["colorStatus"];
         echo json_encode($resp);
       }

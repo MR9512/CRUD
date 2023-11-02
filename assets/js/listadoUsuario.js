@@ -95,13 +95,13 @@ $("#formulario").on("submit",function(){
 $("#actualizarFormulario").on("submit", function(event) {
   event.preventDefault();
   var formulario = $("#actualizarFormulario").serialize();
-  console.log("FORMULARIO",formulario); //Imprime el objeto en la consola
   $.ajax({
     url: 'updateUsuario',
     type: 'post',
     data: formulario,
     dataType: "json",
     success: function(response) {
+      console.log("Datos",response); //Imprime el objeto en la consola
       // Actualiza los campos de visualización con los nuevos datos del usuario
       $(".verNombreUsuario").val(response.datos.nombre);
       $(".verApellidosUsuario").val(response.datos.apellidos);
