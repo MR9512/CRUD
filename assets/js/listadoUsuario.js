@@ -1,5 +1,5 @@
-  //Cuando se hace clic en un elemento con la clase "ver"
-  $(document).on("click",".ver", function(event){
+//Cuando se hace clic en un elemento con la clase "ver"
+$(document).on("click",".ver", function(event){
     //Obtiene el atributo "data-usuario" del elemento clickeado
     id_usuario = $(this).data("usuario");
     //Crea un objeto para configurar la solicitud AJAX
@@ -11,8 +11,8 @@
     peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
     $("#infoModal").modal("show"); //Muestra un modal con información al usuario
   });
-  //Cuando se hace clic en un elemento con la clase "editar"
-  $(document).on("click",".editar", function(event){
+//Cuando se hace clic en un elemento con la clase "editar"
+$(document).on("click",".editar", function(event){
     //Obtiene el atributo "data-usuario" del elemento clickeado
     id_usuario = $(this).data("usuario");
     //Crea un objeto para configurar la solicitud AJAX
@@ -24,8 +24,7 @@
     peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
     $("#updateModal").modal("show"); //Muestra un modal de actualización al usuario
   });
-
-  //Cuando se hace clic en un elemento con la clase "eliminar"
+//Cuando se hace clic en un elemento con la clase "eliminar"
 $(document).on("click", ".eliminar", function() {
   id_usuario = $(this).data("usuario");   //Obtiene el valor del atributo "data-usuario" del elemento clickeado
   var obj = {}; //Crea un objeto para almacenar los datos de la solicitud AJAX
@@ -36,8 +35,7 @@ $(document).on("click", ".eliminar", function() {
   obj.accion = "deleteUsuario"; //Acción que se realizará en el servidor (eliminar usuario)
   peticionAjax(obj);  //Llama a la función peticionAjax y pasa el objeto como parámetro para realizar la solicitud AJAX
 });
-
-  //Cuando se envía el formulario con el id "formulario"
+//Cuando se envía el formulario con el id "formulario"
 $("#formulario").on("submit",function(){
     event.preventDefault(); //Previene el comportamiento por defecto del formulario (recargar la página)
     //Verifica si el campo de nombre de usuario está vacío
@@ -90,8 +88,7 @@ $("#formulario").on("submit",function(){
   obj.accion = "insertarUsuario"; //Acción que se realizará en el servidor (insertar un usuario)
   peticionAjax(obj); //Realiza la solicitud AJAX usando la configuración del objeto
   });
-
- //Cuando se envía el formulario con el id "actualizarFormulario"
+//Cuando se envía el formulario con el id "actualizarFormulario"
 $("#actualizarFormulario").on("submit", function(event) {
   event.preventDefault();
   var formulario = $("#actualizarFormulario").serialize();
@@ -102,42 +99,50 @@ $("#actualizarFormulario").on("submit", function(event) {
     dataType: "json",
     success: function(response) {
            //Inicializa una variable HTML
-           var html = "";
+           var actTabla = "";
            //Obtiene los datos de usuarios de la respuesta AJAX
            var usuarios = response.usuarios;
            //Itera a través de los datos de usuarios y construye una tabla HTML
            $.each(usuarios.id_usuario, function(key, dato) {
              //Construye una fila de tabla para cada usuario en los datos recibidos
-             html += '<tr class="usuario_' + dato + '">'; // Inicia la fila de la tabla con una clase específica para cada usuario
-             html += '<td>' + usuarios.nombre[key] + '</td>'; // Agrega la celda para el nombre del usuario
-             html += '<td>' + usuarios.apellidos[key] + '</td>'; // Agrega la celda para los apellidos del usuario
-             html += '<td>' + usuarios.rol[key] + '</td>'; // Agrega la celda para el rol del usuario
-             html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>'; // Agrega la celda para el estado del usuario con una clase específica
-             html += '<td width="8%">'; // Celda para los iconos de acciones con un ancho específico
+             actTabla += '<tr class="usuario_' + dato + '">'; //Inicia la fila de la tabla con una clase específica para cada usuario
+             actTabla += '<td>' + usuarios.nombre[key] + '</td>'; //Agrega la celda para el nombre del usuario
+             actTabla += '<td>' + usuarios.apellidos[key] + '</td>'; //Agrega la celda para los apellidos del usuario
+             actTabla += '<td>' + usuarios.rol[key] + '</td>'; //Agrega la celda para el rol del usuario
+             actTabla += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>'; // Agrega la celda para el estado del usuario con una clase específica
+             actTabla += '<td width="8%">'; //Celda para los iconos de acciones con un ancho específico
              //Agrega iconos para ver, editar y eliminar usuarios, cada uno con su clase específica y atributo de datos para el ID del usuario
-             html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para ver usuario
-             html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para editar usuario
-             html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para eliminar usuario
-             html += '</td>'; // Cierra la celda de acciones
-             html += '</tr>'; // Cierra la fila de la tabla
+             actTabla += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para ver usuario
+             actTabla += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para editar usuario
+             actTabla += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para eliminar usuario
+             actTabla += '</td>'; //Cierra la celda de acciones
+             actTabla += '</tr>'; //Cierra la fila de la tabla
            });
-      $(".tableUsuarios").html(html); // Agrega la nueva fila a la tabla
-      // Cierra el modal de actualización
+      $(".tableUsuarios").html(actTabla); //Agrega la nueva fila a la tabla
+      //Cierra el modal de actualización
       $("#updateModal").modal("hide");
-      // Actualiza el contenido del sistema con el mensaje de respuesta del servidor
+      //Actualiza el contenido del sistema con el mensaje de respuesta del servidor
       $(".contenidoSistema").html(response.respuesta);
-      // Muestra un modal con el mensaje del sistema
+      //Muestra un modal con el mensaje del sistema
       $("#mensajeSistema").modal("show");
       
     },
     error: function(xhr, status) {
-      // Maneja errores si la solicitud falla
+      //Maneja errores si la solicitud falla
     }
   });
 });
-
-
-  //Definición de la función peticionAjax que toma un objeto de configuración como parámetro
+//Metodo para limpiar los campos de la modal de Insertar un usuario nuevo
+function limpiarModalInsercion() {
+  //Kimpia los campos despues de hacer un registro
+  $(".nombreUsuario").val("");
+  $(".apellidosUsuario").val("");
+  $(".correoUsuario").val("");
+  $(".passwordUsuario").val("");
+  $(".telefonoUsuario").val("");
+  $(".id_rol").val("Seleccione:");
+}
+//Definición de la función peticionAjax que toma un objeto de configuración como parámetro
 function peticionAjax(obj) {
   //Realiza una solicitud AJAX usando jQuery
   $.ajax({
@@ -148,38 +153,38 @@ function peticionAjax(obj) {
     success: function(res) {
       //Cuando la solicitud es exitosa, se ejecuta esta función
       switch (obj.accion) {
-
         case "insertarUsuario":
             //Inicializa una variable HTML
-            var html = "";
+            var insTabla = "";
             //Obtiene los datos de usuarios de la respuesta AJAX
             var usuarios = res.usuarios;
             //Itera a través de los datos de usuarios y construye una tabla HTML
             $.each(usuarios.id_usuario, function(key, dato) {
               //Construye una fila de tabla para cada usuario en los datos recibidos
-              html += '<tr class="usuario_' + dato + '">'; // Inicia la fila de la tabla con una clase específica para cada usuario
-              html += '<td>' + usuarios.nombre[key] + '</td>'; // Agrega la celda para el nombre del usuario
-              html += '<td>' + usuarios.apellidos[key] + '</td>'; // Agrega la celda para los apellidos del usuario
-              html += '<td>' + usuarios.rol[key] + '</td>'; // Agrega la celda para el rol del usuario
-              html += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>'; // Agrega la celda para el estado del usuario con una clase específica
-              html += '<td width="8%">'; // Celda para los iconos de acciones con un ancho específico
+              insTabla += '<tr class="usuario_' + dato + '">'; // Inicia la fila de la tabla con una clase específica para cada usuario
+              insTabla += '<td>' + usuarios.nombre[key] + '</td>'; // Agrega la celda para el nombre del usuario
+              insTabla += '<td>' + usuarios.apellidos[key] + '</td>'; // Agrega la celda para los apellidos del usuario
+              insTabla += '<td>' + usuarios.rol[key] + '</td>'; // Agrega la celda para el rol del usuario
+              insTabla += '<td class="' + usuarios.colorStatus[key] + '">' + usuarios.nombreStatus[key] + '</td>'; // Agrega la celda para el estado del usuario con una clase específica
+              insTabla += '<td width="8%">'; // Celda para los iconos de acciones con un ancho específico
               //Agrega iconos para ver, editar y eliminar usuarios, cada uno con su clase específica y atributo de datos para el ID del usuario
-              html += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para ver usuario
-              html += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para editar usuario
-              html += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para eliminar usuario
-              html += '</td>'; // Cierra la celda de acciones
-              html += '</tr>'; // Cierra la fila de la tabla
+              insTabla += '<i class="bi bi-eye ver ver_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para ver usuario
+              insTabla += '<i class="bi bi-pencil editar editar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para editar usuario
+              insTabla += '<i class="bi bi-trash eliminar eliminar_' + usuarios.id_usuario[key] + '" data-usuario="' + usuarios.id_usuario[key] + '"></i>&nbsp;&nbsp;'; // Icono para eliminar usuario
+              insTabla += '</td>'; // Cierra la celda de acciones
+              insTabla += '</tr>'; // Cierra la fila de la tabla
             });
             //Actualiza el contenido de la tabla con la nueva estructura HTML
-            $(".tableUsuarios").html(html);
+            $(".tableUsuarios").html(insTabla);
             //Oculta el modal con el ID "exampleModal"
             $("#exampleModal").modal("hide");
             //Actualiza el contenido del sistema con el mensaje de respuesta del servidor
             $(".contenidoSistema").html(res.mensaje);
             //Muestra un modal con el mensaje del sistema
             $("#mensajeSistema").modal("show");
+            //Limpia los campos de la modal
+            limpiarModalInsercion();
             break;
-
             case "getUsuario":
               // Actualiza los valores de los campos de visualización con la información del usuario obtenida de la respuesta del servidor
               $(".verNombreUsuario").val(res.nombre); //Establece el valor del campo "verNombreUsuario" con el valor de "res.nombre"
@@ -190,7 +195,6 @@ function peticionAjax(obj) {
               $(".verRolUsuario").val(res.rol); //Establece el valor del campo "verRolUsuario" con el valor de "res.rol"
               $(".verFechaUsuario").val(res.fecha_altaUsuario); //Establece el valor del campo "verFechaUsuario" con el valor de "res.fecha_altaUsuario"
             break;
-
             case "updateUsuario":
               //Variables para manejar las opciones seleccionadas en los selectores de estado y rol
               var statusActivo = '';
@@ -236,7 +240,6 @@ function peticionAjax(obj) {
               //Llena el campo de fecha de alta del usuario con la fecha recibida del servidor
               $(".editarFechaUsuario").val(res.fecha_altaUsuario);
               break;
-
               case "deleteUsuario":
               //Oculta el elemento del usuario específico en la interfaz utilizando su ID
               $(".usuario_" + obj.id_usuario).hide();
@@ -244,8 +247,7 @@ function peticionAjax(obj) {
               $(".contenidoSistema").html(res.respuesta);
               //Muestra un modal con un mensaje del sistema
               $("#mensajeSistema").modal("show");
-              break;
-            
+              break;    
       }
     },
       error: function(xhr, status){

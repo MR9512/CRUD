@@ -5,7 +5,6 @@
   Agregar nuevo usuario
 </button>
 
-
 <!-- Modal para agregar un nuevo usuario -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <!-- Cuadro de diálogo modal con tamaño extra grande -->
@@ -108,8 +107,9 @@
 </div>
 </div>
 
-
+<!-- Tabla para mostrar información de usuarios -->
 <table class="table">
+  <!-- Encabezados de la tabla -->
   <thead>
     <tr>
       <th scope="col">Nombre</th>
@@ -119,22 +119,27 @@
       <th scope="col">Acciones</th>
     </tr>
   </thead>
+  <!-- Cuerpo de la tabla que se llenará dinámicamente con datos de PHP -->
   <tbody class="tableUsuarios">
-   <?php
-     foreach($respuesta["id_usuario"] as $i=>$id_usuario){
+    <?php
+    // Iterar a través de los datos proporcionados por PHP y generar filas de la tabla
+    foreach($respuesta["id_usuario"] as $i=>$id_usuario){
     ?>  
     <tr class="usuario_<?= $id_usuario ?>">
-       <td><?= $respuesta["nombre"][$i]?></td>
-       <td><?= $respuesta["apellidos"][$i]?></td>
-       <td><?= $respuesta["rol"][$i]?></td>
+      <!-- Columnas con información del usuario -->
+      <td><?= $respuesta["nombre"][$i]?></td>
+      <td><?= $respuesta["apellidos"][$i]?></td>
+      <td><?= $respuesta["rol"][$i]?></td>
+      <!-- La clase del estatus se utiliza para aplicar un color específico al estatus -->
       <td class="<?= $respuesta['colorStatus'][$i] ?>"><?= $respuesta['nombreStatus'][$i] ?></td>
-       <td width="8%">  
-       <i class="bi bi-eye ver ver_<?= $id_usuario ?>" data-usuario="<?= $id_usuario ?>"></i>&nbsp;&nbsp; 
-       <i class="bi bi-pencil editar editar_<?= $id_usuario ?>" data-usuario="<?= $id_usuario ?>"></i>&nbsp;&nbsp; 
-       <i class="bi bi-trash eliminar eliminar_<?= $id_usuario ?>" data-usuario="<?= $id_usuario ?>"></i>
-       </td>
+      <!-- Columna de acciones con íconos para ver, editar y eliminar usuarios -->
+      <td width="8%">  
+        <i class="bi bi-eye ver ver_<?= $id_usuario ?>" data-usuario="<?= $id_usuario ?>"></i>&nbsp;&nbsp; 
+        <i class="bi bi-pencil editar editar_<?= $id_usuario ?>" data-usuario="<?= $id_usuario ?>"></i>&nbsp;&nbsp; 
+        <i class="bi bi-trash eliminar eliminar_<?= $id_usuario ?>" data-usuario="<?= $id_usuario ?>"></i>
+      </td>
     </tr> 
-     <?php } ?>
+    <?php } ?>
   </tbody>
 </table>
 
@@ -143,11 +148,15 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- Título del modal -->
         <h5 class="modal-title" id="exampleModalLabel">Ver usuario</h5>
+        <!-- Botón para cerrar el modal -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <!-- Formulario para mostrar información del usuario (todos los campos están deshabilitados) -->
       <form class="row g-3 needs-validation" novalidate id="formulario">
         <div class="modal-body">
+          <!-- Campos del formulario para mostrar información del usuario -->
           <div class="col-md-6">
             <label for="inputCity" class="form-label">Nombre</label>
             <input type="text" name="verNombreUsuario" class="form-control verNombreUsuario" id="inputCity" disabled>
@@ -177,6 +186,7 @@
             <input type="text" name="verFechaUsuario" class="form-control verFechaUsuario" id="inputCity" disabled>
           </div>
         </div>
+        <!-- Botón para cerrar el modal -->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
@@ -190,11 +200,15 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- Título del modal -->
         <h5 class="modal-title" id="updateModal">Modificar usuario</h5>
+        <!-- Botón para cerrar el modal -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <!-- Formulario para editar información del usuario -->
       <form class="row g-3 needs-validation" novalidate id="actualizarFormulario">
         <div class="modal-body">
+          <!-- Campos del formulario para editar el usuario -->
           <div class="col-md-6">
             <label for="inputCity" class="form-label">Nombre</label>
             <input type="text" name="editarNombreUsuario" class="form-control editarNombreUsuario" id="inputCity">
@@ -222,6 +236,7 @@
           <div class="col-md-6">
             <label for="inputCity" class="form-label">Status</label>
             <div class="editarStatusUsuario"></div>
+            <!-- Campo oculto para almacenar el ID del usuario -->
             <input type="hidden" class="editarId_usuario" name="id_usuario">
           </div>
           <div class="col-md-6">
@@ -229,8 +244,11 @@
             <input type="date" name="editarFechaUsuario" class="form-control editarFechaUsuario" id="inputCity">
           </div>
         </div>
+        <!-- Botones del pie del modal -->
         <div class="modal-footer">
+          <!-- Botón para cerrar el modal -->
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <!-- Botón para enviar el formulario de actualización del usuario -->
           <button type="submit" class="btn btn-primary updateUsuario">Actualizar</button>
         </div>
       </form>

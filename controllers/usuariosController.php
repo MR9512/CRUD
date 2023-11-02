@@ -22,7 +22,6 @@ class usuariosController extends coreController{
         //Asigna la ruta del archivo JavaScript 'listadoUsuario.js' a la propiedad 'js'
         $this->js = "assets/js/listadoUsuario.js";
     }
-
     //Método para mostrar el listado de usuarios
     public function listado(){
         //Obtiene la lista de usuarios utilizando el método getUsuarios() del modelo usuariosModel
@@ -34,18 +33,17 @@ class usuariosController extends coreController{
         //Incluye el pie de página
         require_once("Views/templates/footer.php");
     }
-
     //Método para insertar un nuevo usuario
     public function insertarUsuario(){
         //Obtiene los datos del usuario desde $_POST y guarda el usuario utilizando el método saveUsuario() del modelo usuariosModel
         $respuesta = $this->usuariosModel->saveUsuario($_POST);
-        //Crea un array con un mensaje indicando que el usuario se ha creado correctamente
+        //Muestra la lista de usuarios registrados
         $retornar["usuarios"] = $this->usuariosModel->getUsuarios();
+        //Crea un array con un mensaje indicando que el usuario se ha creado correctamente
         $retornar['mensaje'] ="Usuario creado correctamente";
         //Convierte el array a formato JSON y lo imprime como respuesta
         echo json_encode($retornar);  
     }
-
     //Método para obtener detalles de un usuario específico
     public function getUsuario(){
         //Obtiene el ID del usuario desde $_POST y obtiene detalles del usuario utilizando el método getUsuario() del modelo usuariosModel
@@ -55,29 +53,34 @@ class usuariosController extends coreController{
         //Convierte el array con detalles del usuario y la lista de roles a formato JSON y lo imprime como respuesta
         echo json_encode($respuesta);
     }
+    //Método para actualizar a un usuario en específico
     public function updateUsuario(){
+        //Establecer el valor de "status" en 1 (activo) en los datos del formulario
         $_POST["status"] = 1;
+        //Llamar al método updateUsuario del modelo para actualizar el usuario en la base de datos
         $respuesta = $this->usuariosModel->updateUsuario($_POST);
+        //Obtener todos los usuarios después de la actualización
         $resp["usuarios"] = $this->usuariosModel->getUsuarios();
+        //Establecer la respuesta de éxito
         $resp["respuesta"] = 'Usuario modificado correctamente';
+        //Obtener roles y estado de los usuarios activos
         $rol = $this->usuariosModel->getUsuarios($_POST['status']);
         $resp["usuarios"]["rol"] = $rol["rol"];
         $resp["usuarios"]["status"] = $rol["status"];
+        //Obtener colores de estado de los usuarios activos
         $colorStatus = $this->usuariosModel->getUsuarios($_POST['status']);
         $resp["colorStatus"] = $rol["colorStatus"];
+        //Convertir el array de respuesta a formato JSON y enviarlo como respuesta al cliente
         echo json_encode($resp);
-      }
-    
-
+    }
     //Método para eliminar un usuario
     public function deleteUsuario(){
-        // Obtiene el ID del usuario a eliminar desde $_POST y elimina el usuario utilizando el método deleteUsuario() del modelo usuariosModel
+        //Obtiene el ID del usuario a eliminar desde $_POST y elimina el usuario utilizando el método deleteUsuario() del modelo usuariosModel
         $respuesta = $this->usuariosModel->deleteUsuario($_POST["id_usuario"]);
         //Crea un array con un mensaje indicando que el usuario se ha eliminado correctamente
         $resp["respuesta"] = 'Usuario eliminado correctamente';
         //Convierte el array a formato JSON y lo imprime como respuesta
         echo json_encode($resp);
     }
-    
 }
 ?>
