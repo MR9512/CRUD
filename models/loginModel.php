@@ -14,7 +14,8 @@ class loginModel
         $this->con = $con->conexion();
         //Obtiene la fecha actual y la almacena en la propiedad $this->fecha
         $fecha = getdate();
-        $this->fecha = $fecha['year']."-".$fecha['mon']."-".$fecha['mday'];
+        //Formatea la fecha
+        $this->fecha = $fecha['year'] . "-" . $fecha['mon'] . "-" . $fecha['mday'] . " " . date("H:i:s"); 
     }
 
      //Método para guardar un usuario en la base de datos

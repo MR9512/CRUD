@@ -29,6 +29,10 @@ class loginController
     public function save(){
         //Llama al método del modelo para guardar el usuario en la base de datos
         $this->loginModel->saveUser($_POST); 
+        //Crea un array con un mensaje indicando que el usuario se ha creado correctamente
+        $retornar['mensaje'] ="Usuario creado correctamente";
+        //Convierte el array a formato JSON y lo imprime como respuesta
+        echo json_encode($retornar);  
     }
 
     //Acción para procesar el formulario de inicio de sesión

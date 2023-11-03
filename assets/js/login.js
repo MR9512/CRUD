@@ -19,6 +19,16 @@ document.addEventListener('click', e => {
         }
     });
     
+//Metodo para limpiar los campos de la modal de Insertar un usuario nuevo
+function limpiarCampos() {
+    //Kimpia los campos despues de hacer un registro
+    $(".nombre").val("");
+    $(".apellidos").val("");
+    $(".correo").val("");
+    $(".password").val("");
+    $(".telefono").val("");
+    $(".id_rol").val("Seleccione:");
+  }    
 
 //Agrega un controlador de clic al botón de registro
 $(".registrar").click(function(event) {
@@ -53,7 +63,14 @@ $(".registrar").click(function(event) {
         type: "POST", // Método de solicitud
         dataType: "json", // Tipo de datos esperados en la respuesta
         success: function(res) {
+            console.log(res);
             // Lógica después de un registro exitoso (puede estar vacía si no hay ninguna acción específica)
+            //Actualiza el contenido del sistema con el mensaje de respuesta del servidor
+            $(".contenidoSistema").html(res.mensaje);
+            //Muestra un modal con el mensaje del sistema
+            $("#mensajeSistema").modal("show");
+             //Limpia los campos de registro
+             limpiarCampos();
         },
         error: function(xhr, status) {
             // Lógica en caso de error (puede estar vacía si no hay ninguna acción específica)
