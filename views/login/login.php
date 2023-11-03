@@ -39,7 +39,7 @@
     </form>
 </div>
 <div class="container-form sign-in">
-    <form class="formulario" action="ingresar" method="post">
+    <form class="formularioLogin" action="ingresar" method="post">
         <h2 class="create-account">Iniciar Sesión</h2> <!-- Encabezado del formulario de inicio de sesión -->
         <div class="iconos">
             <!-- Íconos para iniciar sesión usando redes sociales -->

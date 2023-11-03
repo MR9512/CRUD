@@ -12,6 +12,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: url('../img/foto.jpg'); 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -69,10 +70,39 @@ body {
 /* Estilos para el formulario */
 .formulario {
     width: 400px;
+    height: 715px;
     padding: 1rem;
     margin: -5rem; /* Márgenes negativos para superponer el formulario en la sección de bienvenida */
     background-color: rgba(51, 51, 51, 0.602); /* Fondo semi-transparente del formulario */
     text-align: center;
+    color: white;
+}
+
+/* Estilos para el formulario */
+.formularioLogin {
+    width: 230px;
+    height: 470px;
+    padding: 1rem;
+    margin: -5rem; /* Márgenes negativos para superponer el formulario en la sección de bienvenida */
+    background-color: rgba(51, 51, 51, 0.602); /* Fondo semi-transparente del formulario */
+    text-align: center;
+    color: white;
+}
+
+/* Estilos para los campos de entrada del login */
+.formularioLogin input {
+    width: 70%;
+    display: block;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-color: white; 
+    border: none;
+    border-bottom: black thin solid; 
+    text-align: center;
+    outline: none;
+    padding: .2rem 0;
+    font-size: .9rem;
+    color: black; 
 }
 
 /* Estilos para el título "Crear una cuenta" en el formulario */
@@ -121,29 +151,14 @@ body {
     display: block;
     margin: auto;
     margin-bottom: 2rem;
-    background-color: transparent;
+    background-color: white; 
     border: none;
-    border-bottom: white thin solid;
+    border-bottom: black thin solid; 
     text-align: center;
     outline: none;
     padding: .2rem 0;
     font-size: .9rem;
-    color: white; /* Color de texto en campos de entrada y select */
-}
-
-/* Estilos para el botón del formulario */
-.formulario input[type="button"] {
-    width: 60%;
-    margin: auto;
-    border: solid thin white;
-    padding: .7rem;
-    border-radius: 2rem;
-    background-color: white;
-    font-weight: 600;
-    margin-top: 3rem;
-    font-size: .8rem;
-    cursor: pointer;
-    color: white;
+    color: black; 
 }
 
 /* Estilos para la clase 'sign-in' (formulario de inicio de sesión) */
